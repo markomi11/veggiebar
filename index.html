@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0B120A; --bg-2:#0E150D; --bg-3:#111A0F; --stripe:#141C13;
+    --fg:#F4F3EC; --fg-2:#C9CEC2; --fg-3:#9AA394; --fg-4:#7C8676;
+    --line:#1C241A; --line-2:#2A3327; --line-3:#223020;
+    --accent:#3B8C0A; --accent-soft:#8FD154; --accent-hover:#4CA80F; --on-accent:#F7FBF2;
+  }
+  :root:has([data-theme="light"]) {
+    --bg:#F6F5EE; --bg-2:#FBFAF4; --bg-3:#EEF2E4; --stripe:#E4E8D8;
+    --fg:#131E0E; --fg-2:#3D4737; --fg-3:#5D6754; --fg-4:#8A9280;
+    --line:#DFE2D4; --line-2:#C8CFB9; --line-3:#D6DBC8;
+    --accent:#3B8C0A; --accent-soft:#2F6E08; --accent-hover:#316F0A; --on-accent:#F7FBF2;
+  }
+  [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 800ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
+  [data-reveal].om-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+  }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; background: var(--bg); }
+  * { box-sizing: border-box; }
+  a { color: var(--accent-soft); text-decoration: none; }
+  a:hover { color: var(--accent); }
+  ::selection { background: var(--accent); color: var(--on-accent); }
+</style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#3B8C0A"/><circle cx="50" cy="50" r="22" fill="#F4F3EC"/><circle cx="50" cy="50" r="13" fill="#3B8C0A"/></svg></template>
+<div data-theme="{{ theme }}" style="background:var(--bg);color:var(--fg);font-family:Manrope,system-ui,sans-serif;min-height:100vh;overflow-x:clip;transition:background 200ms ease,color 200ms ease">
+
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 24px;background:var(--accent);color:var(--on-accent);font-size:13px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums">
+    <span>Sveže pravljeno svakog jutra · Dostava u Kruševcu</span>
+  </div>
+
+  <header style="display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,4vw,56px);max-width:1400px;flex-wrap:wrap;row-gap:16px;margin:0 auto">
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span style="font-family:'Instrument Serif',serif;font-size:30px;letter-spacing:0.01em">Veggie&nbsp;Bar</span>
+    </div>
+    <nav style="display:flex;align-items:center;gap:clamp(14px,2.4vw,36px);flex-wrap:nowrap;font-size:15px;color:var(--fg-2);white-space:nowrap">
+      <sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+        <a href="#meni" style="color:var(--fg-2)" style-hover="color:var(--fg)">Meni</a>
+      </sc-if>
+      <sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+        <a href="#sastavi" style="color:var(--fg-2)" style-hover="color:var(--fg)">Sastavi salatu</a>
+      </sc-if>
+      <sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+        <a href="#kako" style="color:var(--fg-2)" style-hover="color:var(--fg)">Kako funkcioniše</a>
+      </sc-if>
+      <sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+        <a href="#pitanja" style="color:var(--fg-2)" style-hover="color:var(--fg)">Pitanja</a>
+      </sc-if>
+      <sc-if value="{{ narrowNav }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMenu }}" aria-label="Meni" style="all:unset;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;border:1px solid var(--line-2);border-radius:10px;padding:0 11px">
+          <span style="display:block;height:2px;background:var(--fg);border-radius:2px"></span>
+          <span style="display:block;height:2px;background:var(--fg);border-radius:2px"></span>
+          <span style="display:block;height:2px;background:var(--fg);border-radius:2px"></span>
+        </button>
+      </sc-if>
+      <sc-if value="{{ wideNav }}" hint-placeholder-val="{{ true }}">
+        <a href="#poruci" style="display:flex;align-items:center;gap:8px;padding:12px 22px;border:1px solid var(--accent);border-radius:10px;color:var(--fg);font-weight:600;font-size:14px;letter-spacing:0.04em;white-space:nowrap" style-hover="background:var(--accent);color:var(--on-accent)">Poruči salatu</a>
+      </sc-if>
+      <button onClick="{{ toggleTheme }}" title="{{ themeTitle }}" aria-label="{{ themeTitle }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:1px solid var(--line-2);border-radius:50%;color:var(--fg-3)" style-hover="border-color:var(--accent)">
+        <sc-if value="{{ showSun }}" hint-placeholder-val="{{ true }}">
+          <span style="position:relative;display:block;width:14px;height:14px;border-radius:50%;background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in oklch, var(--accent-soft) 22%, transparent)"></span>
+        </sc-if>
+        <sc-if value="{{ showMoon }}" hint-placeholder-val="{{ false }}">
+          <span style="position:relative;display:block;width:16px;height:16px;border-radius:50%;background:var(--accent-soft);overflow:hidden">
+            <span style="position:absolute;top:-4px;right:-5px;width:14px;height:14px;border-radius:50%;background:var(--bg);display:block"></span>
+          </span>
+        </sc-if>
+      </button>
+    </nav>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:2px;padding:8px clamp(20px,4vw,56px) 24px;border-bottom:1px solid var(--line);background:var(--bg-2)">
+      <a href="#meni" onClick="{{ closeMenu }}" style="padding:14px 0;font-size:18px;color:var(--fg);border-bottom:1px solid var(--line)">Meni</a>
+      <a href="#sastavi" onClick="{{ closeMenu }}" style="padding:14px 0;font-size:18px;color:var(--fg);border-bottom:1px solid var(--line)">Sastavi salatu</a>
+      <a href="#kako" onClick="{{ closeMenu }}" style="padding:14px 0;font-size:18px;color:var(--fg);border-bottom:1px solid var(--line)">Kako funkcioniše</a>
+      <a href="#pitanja" onClick="{{ closeMenu }}" style="padding:14px 0;font-size:18px;color:var(--fg);border-bottom:1px solid var(--line)">Pitanja</a>
+      <a href="#poruci" onClick="{{ closeMenu }}" style="margin-top:16px;text-align:center;padding:16px 22px;background:var(--accent);color:var(--on-accent);border-radius:10px;font-weight:700;font-size:16px">Poruči salatu</a>
+    </div>
+  </sc-if>
+
+  
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(36px,5vw,64px);align-items:center;max-width:1400px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,4vw,56px) clamp(64px,8vw,110px)">
+    <div>
+      <div data-reveal="" style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:28px">salate po tvom izboru</div>
+      <h1 data-reveal="" style="transition-delay:90ms;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(44px,7vw,86px);line-height:1.0;letter-spacing:-0.02em;margin:0 0 28px;text-wrap:pretty">Zdrav<br>i svež obrok.<br><span style="font-style:italic;color:var(--accent-soft)">Svaki dan.</span></h1>
+      <p data-reveal="" style="transition-delay:180ms;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--fg-2);max-width:52ch;margin:0 0 40px;text-wrap:pretty">Sastavljamo salate od sezonskog povrća, čistih proteina i dresinga koje pravimo sami, bez šećera, bez veštačkih dodataka. Naručiš, dobiješ i sve je spremno za jelo.</p>
+      <div data-reveal="" style="transition-delay:260ms;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+        <a href="#sastavi" style="padding:19px 38px;background:var(--accent);color:var(--on-accent);border-radius:10px;font-weight:700;font-size:16px;letter-spacing:0.03em;white-space:nowrap" style-hover="background:var(--accent-hover)">Napravi svoju salatu</a>
+        <a href="#meni" style="padding:19px 30px;color:var(--fg);border:1px solid var(--line-2);border-radius:10px;font-weight:600;font-size:16px;white-space:nowrap" style-hover="border-color:var(--accent)">Vidi meni</a>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:52px;padding-top:32px;border-top:1px solid var(--line);font-size:15px;color:var(--fg-3);font-family:Manrope,system-ui,sans-serif;font-weight:500;letter-spacing:0.01em">
+        <span>100% domaće povrće</span>
+        <span>Dresing bez šećera</span>
+        <span>Spremno za 15 min</span>
+      </div>
+    </div>
+    <div data-reveal="" style="transition-delay:120ms;aspect-ratio:4/5;border:1px solid var(--line-2);border-radius:3px;overflow:hidden;background:var(--bg-2)">
+      <img src="images/sveza-salata-u-staklenoj-posudi-.png" alt="Sveža salata u staklenoj posudi, snimljena odozgo" style="width:100%;height:100%;object-fit:cover;display:block">
+    </div>
+  </section><section style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(48px,6vw,74px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(32px,4vw,56px)">
+      <div>
+        <div data-reveal="" style="font-family:'Instrument Serif',serif;font-size:38px;color:var(--accent-soft);margin-bottom:14px">01</div>
+        <h3 style="font-size:19px;font-weight:600;margin:0 0 10px;letter-spacing:-0.01em">Sastojci koje prepoznaješ</h3>
+        <p style="margin:0;font-size:16px;line-height:1.65;color:var(--fg-3)">Povrće sa pijace, maslinovo ulje, semenke, sir, piletina ili slanutak. Ništa što ne bi stavio u svoju kuhinju.</p>
+      </div>
+      <div>
+        <div data-reveal="" style="font-family:'Instrument Serif',serif;font-size:38px;color:var(--accent-soft);margin-bottom:14px">02</div>
+        <h3 style="font-size:19px;font-weight:600;margin:0 0 10px;letter-spacing:-0.01em">Obrok, ne prilog</h3>
+        <p style="margin:0;font-size:16px;line-height:1.65;color:var(--fg-3)">Svaka salata je izbalansirana da te zasiti, dovoljno proteina i zdravih masti da ne tražiš nešto slatko posle.</p>
+      </div>
+      <div>
+        <div data-reveal="" style="font-family:'Instrument Serif',serif;font-size:38px;color:var(--accent-soft);margin-bottom:14px">03</div>
+        <h3 style="font-size:19px;font-weight:600;margin:0 0 10px;letter-spacing:-0.01em">Isti standard svaki put</h3>
+        <p style="margin:0;font-size:16px;line-height:1.65;color:var(--fg-3)">Fiksne recepture i gramaže. Ono što ti se juče svidelo, isto je i danas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="cinija" style="position:relative;border-top:1px solid var(--line);background:var(--bg-2)">
+    <div data-bowl-track="" style="height:300vh">
+      <div style="position:sticky;top:0;min-height:100vh;display:flex;align-items:center;padding:clamp(24px,4vh,56px) 0">
+        <div style="width:100%;max-width:1400px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(28px,5vw,72px);align-items:center">
+          <div>
+            <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:18px">Šta ide unutra</div>
+            <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(32px,4.2vw,52px);line-height:1.06;margin:0 0 20px;letter-spacing:-0.02em">Pet minuta od praznog tanjira do obroka.</h2>
+            <p style="margin:0 0 28px;font-size:17px;line-height:1.7;color:var(--fg-3);max-width:42ch">Ovako izgleda jedan obrok kod nas, salata je gotova za oko 5 minuta, i spremna za put do Vaših vrata ili za poneti, tako da uvek imate zdrav obrok sa sobom.</p>
+            <div style="display:flex;align-items:baseline;gap:14px;padding-top:20px;border-top:1px solid var(--line)">
+              <span style="font-family:'Instrument Serif',serif;font-size:40px;line-height:1;color:var(--accent-soft);font-variant-numeric:tabular-nums"><span data-bowl-count="">0:00</span></span>
+              <span data-bowl-label="" style="font-size:16px;color:var(--fg-2)">Prazan tanjir</span>
+            </div>
+          </div>
+          <div data-bowl-stage="" style="position:relative;justify-self:center;width:min(500px,86vw,52vh);aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--stripe)">
+            <img src="images/prazan-tanjir.png" alt="Prazan tanjir" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;inset:0;z-index:2">
+              <img data-topping="" src="images/zelena-baza.png" alt="Zelena baza" style="position:absolute;left:15.6%;top:14.6%;width:68.8%;z-index:1;opacity:0;display:block;filter:drop-shadow(0 4px 7px rgba(0,0,0,0.26));will-change:transform,opacity">
+              <img data-topping="" src="images/grilovana-piletina.png" alt="Grilovana piletina" style="position:absolute;left:26.4%;top:25.4%;width:47.4%;z-index:2;opacity:0;display:block;filter:drop-shadow(0 4px 7px rgba(0,0,0,0.26));will-change:transform,opacity">
+              <img data-topping="" src="images/ceri-paradajz.png" alt="Čeri paradajz" style="position:absolute;left:24.6%;top:23.6%;width:50.8%;z-index:3;opacity:0;display:block;filter:drop-shadow(0 4px 7px rgba(0,0,0,0.26));will-change:transform,opacity">
+              <img data-topping="" src="images/krastavac-i-rotkvice.png" alt="Krastavac i rotkvice" style="position:absolute;left:25.4%;top:24.4%;width:49.1%;z-index:4;opacity:0;display:block;filter:drop-shadow(0 4px 7px rgba(0,0,0,0.26));will-change:transform,opacity">
+              <img data-topping="" src="images/avokado-i-kinoa.png" alt="Avokado i kinoa" style="position:absolute;left:27.1%;top:27.1%;width:45.8%;z-index:5;opacity:0;display:block;filter:drop-shadow(0 4px 7px rgba(0,0,0,0.26));will-change:transform,opacity">
+              <img data-topping="" src="images/feta-masline-i-semenke.png" alt="Feta, masline i semenke" style="position:absolute;left:26.4%;top:25.4%;width:47.4%;z-index:6;opacity:0;display:block;filter:drop-shadow(0 4px 7px rgba(0,0,0,0.26));will-change:transform,opacity">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="meni" style="max-width:1400px;margin:0 auto;padding:clamp(64px,8vw,110px) clamp(20px,4vw,56px)">
+    <div data-reveal="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:54px">
+      <div>
+        <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:18px">Meni</div>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(34px,4.5vw,56px);line-height:1.06;margin:0;letter-spacing:-0.02em">Sedam salata. Bez suvišnih opcija.</h2>
+      </div>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:var(--fg-3);max-width:34ch">Meni menjamo sezonski. Sve dolazi u staklenoj posudi sa dresingom odvojeno.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:28px">
+      <sc-for list="{{ menu }}" as="s" hint-placeholder-count="6">
+        <article data-reveal="" style="border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--bg-2);display:flex;flex-direction:column;transition:opacity 800ms ease,transform 500ms cubic-bezier(.2,.7,.2,1),border-color 250ms ease" style-hover="border-color:var(--accent);transform:translateY(-6px)">
+          <div role="img" aria-label="{{ s.name }}" style="{{ s.imgStyle }}"></div>
+          <div style="padding:26px 26px 28px;display:flex;flex-direction:column;gap:12px;flex:1">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+              <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:27px;margin:0;letter-spacing:-0.01em">{{ s.name }}</h3>
+              <span style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-weight:600;font-size:16px;color:var(--accent-soft);white-space:nowrap">{{ s.price }}</span>
+            </div>
+            <p style="margin:0;font-size:15px;line-height:1.6;color:var(--fg-3)">{{ s.desc }}</p>
+            <sc-if value="{{ showNutrition }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:16px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:12px;color:var(--fg-4);letter-spacing:0.06em">
+                <span>{{ s.kcal }}</span>
+                <span>{{ s.protein }}</span>
+              </div>
+            </sc-if>
+          </div>
+        </article>
+      </sc-for>
+      <sc-if value="{{ showWeekly }}" hint-placeholder-val="{{ true }}">
+      <article data-reveal="" style="border:1px solid var(--line-2);border-radius:3px;background:var(--bg-3);padding:32px;display:flex;flex-direction:column;justify-content:space-between;gap:24px">
+        <div>
+          <h3 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;margin:0 0 12px;letter-spacing:-0.01em">Nedeljni paket</h3>
+          <p style="margin:0;font-size:15px;line-height:1.65;color:var(--fg-3)">Pet salata, pet radnih dana, dostava do 11h. Ti samo kažeš gde.</p>
+        </div>
+        <div>
+          <div style="font-family:'Instrument Serif',serif;font-variant-numeric:tabular-nums;font-size:34px;letter-spacing:-0.01em;color:var(--accent-soft);margin-bottom:16px">{{ weeklyPrice }}</div>
+          <a href="#poruci" style="display:inline-block;padding:15px 28px;background:var(--accent);color:var(--on-accent);border-radius:10px;font-weight:700;font-size:15px;white-space:nowrap" style-hover="background:var(--accent-hover)">Uzmi paket</a>
+        </div>
+      </article>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="kako" style="border-top:1px solid var(--line);background:var(--bg-2)">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(56px,7vw,100px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(40px,5vw,80px);align-items:center">
+      <div data-reveal="" style="aspect-ratio:1/1;border:1px solid var(--line-2);border-radius:3px;overflow:hidden;background:var(--bg-2)">
+        <img src="images/salate-u-staklenim-posudama-sa-o.png" alt="Salate u staklenim posudama sa odvojenim dresingom" style="width:100%;height:100%;object-fit:cover;display:block">
+      </div>
+      <div>
+        <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:18px">Od porudžbine do stola</div>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(32px,4.2vw,52px);line-height:1.08;margin:0 0 44px;letter-spacing:-0.02em">Tri koraka do obroka.</h2>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+            <div data-reveal="" style="display:grid;grid-template-columns:56px 1fr;gap:24px;padding:26px 0;border-top:1px solid var(--line)">
+              <span style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--accent-soft);padding-top:5px;letter-spacing:0.1em">{{ st.n }}</span>
+              <div>
+                <h3 style="font-size:20px;font-weight:600;margin:0 0 8px;letter-spacing:-0.01em">{{ st.title }}</h3>
+                <p style="margin:0;font-size:16px;line-height:1.65;color:var(--fg-3);max-width:56ch">{{ st.text }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1400px;margin:0 auto;padding:clamp(64px,8vw,110px) clamp(20px,4vw,56px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(40px,5vw,80px);align-items:start">
+      <div>
+        <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:18px">Zašto Veggie Bar</div>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(32px,4.2vw,52px);line-height:1.08;margin:0 0 24px;letter-spacing:-0.02em">Najteži deo zdrave ishrane je priprema.</h2>
+        <p style="margin:0;font-size:18px;line-height:1.7;color:var(--fg-2);max-width:50ch;text-wrap:pretty">Nabavka, pranje, seckanje, merenje, tu većina ljudi stane i uzme nešto brzo. Naš posao je da ti taj deo skinemo s vrata, a da kvalitet ostane isti kao da si sam pravio.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;border-top:1px solid var(--line)">
+        <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="4">
+          <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:8px 32px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--line)">
+            <h3 style="font-size:18px;font-weight:600;margin:0;letter-spacing:-0.01em;color:var(--fg)">{{ p.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.65;color:var(--fg-3)">{{ p.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="sastavi" style="border-top:1px solid var(--line);background:var(--bg-2)">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(64px,8vw,110px) clamp(20px,4vw,56px)">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:48px">
+        <div>
+          <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:18px">Sastavi svoju salatu</div>
+          <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(34px,4.5vw,56px);line-height:1.06;margin:0;letter-spacing:-0.02em">Ti biraš, mi spremamo.</h2>
+        </div>
+        <p style="margin:0;font-size:16px;line-height:1.65;color:var(--fg-3);max-width:38ch">Izaberi bazu, protein, do četiri dodatka i dresing. Cena se računa u hodu.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(36px,4vw,64px);align-items:start">
+        <div style="display:flex;flex-direction:column;gap:34px">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+            <div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)">
+                <h3 style="font-size:17px;font-weight:600;margin:0;letter-spacing:-0.01em">{{ g.title }}</h3>
+                <span style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-4)">{{ g.note }}</span>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px">
+                <sc-for list="{{ g.options }}" as="o" hint-placeholder-count="5">
+                  <button onClick="{{ o.pick }}" style="{{ o.style }}">
+                    <span>{{ o.name }}</span>
+                    <span style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:12px;opacity:0.7">{{ o.tag }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div data-reveal="" style="border:1px solid var(--line-2);border-radius:3px;background:var(--bg-3);padding:clamp(26px,3vw,38px);display:flex;flex-direction:column;gap:22px;position:sticky;top:24px">
+          <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent-soft)">Tvoja salata</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:clamp(28px,3vw,38px);line-height:1.15;letter-spacing:-0.01em">{{ buildName }}</div>
+          <div style="display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)">
+            <sc-for list="{{ buildLines }}" as="l" hint-placeholder-count="4">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)">
+                <span style="font-size:15px;color:var(--fg-2)">{{ l.label }}</span>
+                <span style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--fg-4);text-align:right">{{ l.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px">
+            <div>
+              <div style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-4);margin-bottom:6px">Ukupno</div>
+              <div style="font-family:'Instrument Serif',serif;font-variant-numeric:tabular-nums;font-size:38px;letter-spacing:-0.01em;color:var(--accent-soft)">{{ buildPrice }}</div>
+            </div>
+            <div style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:12px;color:var(--fg-4);text-align:right;line-height:1.7">{{ buildMacros }}</div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="#poruci" style="padding:17px 30px;background:var(--accent);color:var(--on-accent);border-radius:10px;font-weight:700;font-size:15px;white-space:nowrap" style-hover="background:var(--accent-hover)">Poruči ovu salatu</a>
+            <button onClick="{{ resetBuild }}" style="all:unset;cursor:pointer;padding:17px 22px;border:1px solid var(--line-2);border-radius:10px;font-family:Manrope,sans-serif;font-size:15px;font-weight:600;color:var(--fg-3);white-space:nowrap" style-hover="border-color:var(--accent);color:var(--fg)">Počni ispočetka</button>
+          </div>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:var(--fg-4)">Sastav pošalji u poruci uz adresu, ili nam ga pročitaj telefonom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="poruci" style="border-top:1px solid var(--line);background:var(--bg-3)">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(56px,7vw,104px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(44px,5vw,80px);align-items:center">
+      <div>
+        <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5.5vw,62px);line-height:1.04;margin:0 0 22px;letter-spacing:-0.02em">Poruči za danas.</h2>
+        <p style="margin:0 0 36px;font-size:19px;line-height:1.65;color:var(--fg-2);max-width:46ch">Pošalji poruku sa salatom koju želiš i adresom. Odgovaramo u roku od nekoliko minuta i potvrđujemo vreme dostave.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <a href="tel:+381600000000" style="padding:19px 36px;background:var(--accent);color:var(--on-accent);border-radius:10px;font-weight:700;font-size:16px;letter-spacing:0.03em;white-space:nowrap" style-hover="background:var(--accent-hover)">Pozovi nas</a>
+          <a href="https://wa.me/381600000000" style="padding:19px 32px;border:1px solid var(--line-2);color:var(--fg);border-radius:10px;font-weight:600;font-size:16px;white-space:nowrap" style-hover="border-color:var(--accent)">Piši na WhatsApp</a>
+        </div>
+        <p style="margin:28px 0 0;font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--fg-4);letter-spacing:0.05em">Radno vreme: pon–sub, 09–19h</p>
+      </div>
+      <div id="pitanja">
+        <div style="font-family:Manrope,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-soft);margin-bottom:20px">Česta pitanja</div>
+        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="4">
+          <div style="border-top:1px solid var(--line-3);padding:20px 0">
+            <button onClick="{{ f.toggle }}" style="all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;font-family:Manrope,sans-serif;font-size:17px;font-weight:600;color:var(--fg)" style-hover="color:var(--accent-soft)">
+              <span>{{ f.q }}</span>
+              <span style="font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--accent-soft);font-size:18px">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:14px 0 0;font-size:16px;line-height:1.65;color:var(--fg-3);max-width:52ch">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--line);padding:40px clamp(20px,4vw,56px);max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+    <span style="font-family:'Instrument Serif',serif;font-size:24px">Veggie Bar</span>
+    <div style="display:flex;gap:28px;font-family:Manrope,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:12px;color:var(--fg-4);letter-spacing:0.08em">
+      <span>Kruševac</span>
+      <span>info@veggiebar.rs</span>
+      <span>© 2026</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;\&quot;dark\&quot; | \&quot;light\&quot;&quot;,&quot;section&quot;:&quot;Izgled&quot;},&quot;showWeekly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Meni&quot;},&quot;showNutrition&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Meni&quot;}}">
+class Component extends DCLogic {
+  static BASES = [
+    { name: "Rukola i spanać", price: 0, kcal: 60, protein: 4 },
+    { name: "Romen salata", price: 0, kcal: 45, protein: 3 },
+    { name: "Kinoa", price: 120, kcal: 190, protein: 7 },
+    { name: "Integralni pirinač", price: 90, kcal: 210, protein: 5 }
+  ];
+  static PROTEINS = [
+    { name: "Bez proteina", price: 0, kcal: 0, protein: 0 },
+    { name: "Grilovana piletina", price: 220, kcal: 180, protein: 32 },
+    { name: "Tuna", price: 200, kcal: 150, protein: 28 },
+    { name: "Slanutak", price: 130, kcal: 165, protein: 14 },
+    { name: "Feta", price: 150, kcal: 200, protein: 11 }
+  ];
+  static EXTRAS = [
+    { name: "Avokado", price: 130, kcal: 160, protein: 2 },
+    { name: "Čeri paradajz", price: 60, kcal: 25, protein: 1 },
+    { name: "Krastavac", price: 50, kcal: 15, protein: 1 },
+    { name: "Cvekla", price: 70, kcal: 45, protein: 2 },
+    { name: "Pečena tikvica", price: 80, kcal: 55, protein: 2 },
+    { name: "Semenke bundeve", price: 70, kcal: 110, protein: 5 },
+    { name: "Masline", price: 70, kcal: 70, protein: 1 },
+    { name: "Kuvano jaje", price: 80, kcal: 75, protein: 6 }
+  ];
+  static DRESSINGS = [
+    { name: "Limun i maslinovo ulje", price: 0, kcal: 90, protein: 0 },
+    { name: "Tahini", price: 60, kcal: 120, protein: 3 },
+    { name: "Jogurt i menta", price: 50, kcal: 70, protein: 3 },
+    { name: "Vinaigrette", price: 50, kcal: 95, protein: 0 },
+    { name: "Bez dresinga", price: 0, kcal: 0, protein: 0 }
+  ];
+  state = { open: 0, theme: null, base: 0, protein: 1, extras: [0, 5], dressing: 0, narrow: false, menuOpen: false };
+  componentDidMount() {
+    this._onResize = () => {
+      const w = document.documentElement.clientWidth || window.innerWidth;
+      const narrow = w < 820;
+      if (narrow !== this.state.narrow) this.setState({ narrow, menuOpen: false });
+    };
+    this._onResize();
+    requestAnimationFrame(this._onResize);
+    setTimeout(this._onResize, 300);
+    setTimeout(this._onResize, 1200);
+    window.addEventListener('resize', this._onResize);
+    if (window.matchMedia) {
+      this._mq = window.matchMedia('(max-width: 819px)');
+      this._onMq = () => this._onResize();
+      if (this._mq.addEventListener) this._mq.addEventListener('change', this._onMq);
+    }
+    this.observeReveals();
+    setTimeout(() => this.bowlScroll(), 60);
+    try {
+      const saved = localStorage.getItem('veggiebar-theme');
+      if (saved === 'light' || saved === 'dark') this.setState({ theme: saved });
+    } catch (e) {}
+  }
+  bowlScroll() {
+    const track = document.querySelector('[data-bowl-track]');
+    const stage = document.querySelector('[data-bowl-stage]');
+    if (!track || !stage) return;
+    const nodes = Array.from(stage.querySelectorAll('[data-topping]'));
+    if (!nodes.length) return;
+    const countEl = document.querySelector('[data-bowl-count]');
+    const labelEl = document.querySelector('[data-bowl-label]');
+    const labels = nodes.map(n => n.getAttribute('alt'));
+    const clamp = v => Math.max(0, Math.min(1, v));
+    const ease = v => 1 - Math.pow(1 - v, 3);
+    let raf = null;
+    const paint = () => {
+      raf = null;
+      const r = track.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      const p = clamp(span > 0 ? -r.top / span : 0);
+      const h = stage.getBoundingClientRect().height || 400;
+      const usable = clamp(p / 0.9);
+      let added = 0;
+      nodes.forEach((el, i) => {
+        const start = (i / nodes.length) * 0.8;
+        const local = ease(clamp((usable - start) / 0.2));
+        if (local > 0.6) added = i + 1;
+        el.style.opacity = String(Math.min(1, local * 1.6));
+        el.style.transform = "translateY(" + (-(1 - local) * h * 0.68).toFixed(1) + "px) rotate(" + ((1 - local) * (i % 2 ? 10 : -10)).toFixed(1) + "deg) scale(" + (0.9 + local * 0.1).toFixed(3) + ")";
+      });
+      if (countEl) {
+        const secs = Math.round(usable * 300);
+        countEl.textContent = Math.floor(secs / 60) + ":" + String(secs % 60).padStart(2, "0");
+      }
+      if (labelEl) labelEl.textContent = added === 0 ? "Prazan tanjir" : (added >= nodes.length ? "Obrok je spreman" : labels[added - 1]);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(paint); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    this._bowlOff = () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+    paint();
+  }
+  observeReveals() {
+    const scan = () => {
+      const nodes = document.querySelectorAll('[data-reveal]:not(.om-in)');
+      if (!nodes.length) return;
+      if (!this._io) {
+        this._io = new IntersectionObserver((entries, obs) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('om-in'); obs.unobserve(e.target); }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      }
+      nodes.forEach(n => this._io.observe(n));
+    };
+    const revealVisible = () => {
+      document.querySelectorAll('[data-reveal]:not(.om-in)').forEach(n => {
+        const r = n.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.95 && r.bottom > 0) n.classList.add('om-in');
+      });
+    };
+    scan();
+    requestAnimationFrame(() => { scan(); revealVisible(); });
+    this._onRevealScroll = () => revealVisible();
+    window.addEventListener('scroll', this._onRevealScroll, { passive: true });
+    window.addEventListener('resize', this._onRevealScroll);
+    this._rescan = setInterval(() => { scan(); revealVisible(); }, 600);
+    setTimeout(() => {
+      clearInterval(this._rescan);
+      document.querySelectorAll('[data-reveal]:not(.om-in)').forEach(n => {
+        const r = n.getBoundingClientRect();
+        if (r.top < window.innerHeight) n.classList.add('om-in');
+      });
+    }, 2500);
+  }
+  componentWillUnmount() {
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+    if (this._mq && this._mq.removeEventListener) this._mq.removeEventListener('change', this._onMq);
+    if (this._onRevealScroll) {
+      window.removeEventListener('scroll', this._onRevealScroll);
+      window.removeEventListener('resize', this._onRevealScroll);
+    }
+    if (this._bowlOff) this._bowlOff();
+    clearInterval(this._rescan);
+    if (this._io) this._io.disconnect();
+  }
+  toggle() {
+    const next = this.theme() === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('veggiebar-theme', next); } catch (e) {}
+    this.setState({ theme: next });
+  }
+  theme() {
+    return this.state.theme ?? this.props.theme ?? 'light';
+  }
+  chipStyle(on, muted) {
+    return {
+      opacity: muted ? 0.45 : 1,
+      all: "unset",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "baseline",
+      gap: "9px",
+      padding: "12px 16px",
+      borderRadius: "10px",
+      border: "1px solid " + (on ? "var(--accent)" : "var(--line-2)"),
+      background: on ? "var(--accent)" : "transparent",
+      color: on ? "var(--on-accent)" : "var(--fg-2)",
+      fontFamily: "Manrope, sans-serif",
+      fontSize: "15px",
+      fontWeight: on ? 600 : 400,
+      transition: "background 140ms ease, border-color 140ms ease, color 140ms ease"
+    };
+  }
+  toggleExtra(i) {
+    this.setState(s => {
+      const has = s.extras.includes(i);
+      if (has) return { extras: s.extras.filter(x => x !== i) };
+      if (s.extras.length >= 4) return {};
+      return { extras: s.extras.concat([i]) };
+    });
+  }
+  buildSummary() {
+    const C = Component;
+    const base = C.BASES[this.state.base];
+    const protein = C.PROTEINS[this.state.protein];
+    const dressing = C.DRESSINGS[this.state.dressing];
+    const extras = this.state.extras.map(i => C.EXTRAS[i]);
+    const picked = [base, protein, dressing].concat(extras);
+    const total = 490 + picked.reduce((a, o) => a + o.price, 0);
+    const kcal = picked.reduce((a, o) => a + o.kcal, 0);
+    const prot = picked.reduce((a, o) => a + o.protein, 0);
+    const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return {
+      buildName: protein.price > 0 ? protein.name + " · " + base.name : base.name,
+      buildLines: [
+        { label: "Baza", value: base.name },
+        { label: "Protein", value: protein.name },
+        { label: "Dodaci", value: extras.length ? extras.map(e => e.name).join(", ") : "bez dodataka" },
+        { label: "Dresing", value: dressing.name }
+      ],
+      buildPrice: fmt(total) + " din",
+      buildMacros: "~" + kcal + " kcal / " + prot + " g proteina"
+    };
+  }
+  buildGroups() {
+    const C = Component;
+    const priceTag = p => (p === 0 ? "uklj." : "+" + p);
+    const mk = (list, sel, set, mute) => list.map((o, i) => ({
+      name: o.name, tag: priceTag(o.price),
+      style: this.chipStyle(sel(i), mute ? mute(i) : false),
+      pick: () => set(i)
+    }));
+    const extrasFull = this.state.extras.length >= 4;
+    return [
+      { title: "Baza", note: "izaberi 1", options: mk(C.BASES, i => this.state.base === i, i => this.setState({ base: i })) },
+      { title: "Protein", note: "izaberi 1", options: mk(C.PROTEINS, i => this.state.protein === i, i => this.setState({ protein: i })) },
+      { title: "Dodaci", note: this.state.extras.length >= 4 ? "izabrano 4 od 4 — skloni jedan" : "izabrano " + this.state.extras.length + " od 4", options: mk(C.EXTRAS, i => this.state.extras.includes(i), i => this.toggleExtra(i), i => extrasFull && !this.state.extras.includes(i)) },
+      { title: "Dresing", note: "izaberi 1", options: mk(C.DRESSINGS, i => this.state.dressing === i, i => this.setState({ dressing: i })) }
+    ];
+  }
+  renderVals() {
+    const theme = this.theme();
+    const showWeekly = this.props.showWeekly ?? true;
+    const showNutrition = this.props.showNutrition ?? true;
+    const menu = [
+      { name: "Zelena baza", price: "690 din", desc: "Rukola, spanać, avokado, semenke bundeve, limun-tahini dresing.", kcal: "420 kcal", protein: "14 g proteina", img: "images/menu-1.png" },
+      { name: "Piletina & kinoa", price: "890 din", desc: "Grilovana piletina, kinoa, cvekla, kozji sir, dresing od jogurta i mente.", kcal: "560 kcal", protein: "38 g proteina", img: "images/menu-2.png" },
+      { name: "Slanutak & pečeno povrće", price: "790 din", desc: "Slanutak, pečena tikvica i paprika, pirinač, dresing od susama.", kcal: "520 kcal", protein: "22 g proteina", img: "images/menu-3.png" },
+      { name: "Tuna salata", price: "920 din", desc: "Tuna, boranija, krompir, jaje, masline, vinaigrette od belog vina.", kcal: "580 kcal", protein: "34 g proteina", img: "images/menu-4.png" },
+      { name: "Grčka", price: "780 din", desc: "Krastavac, paradajz, crveni luk, masline, feta, origano i maslinovo ulje.", kcal: "480 kcal", protein: "18 g proteina", img: "images/menu-5.png" },
+      { name: "Gambori i avokado", price: "990 din", desc: "Grilovani gambori, avokado, mladi listovi, dresing od limete.", kcal: "530 kcal", protein: "30 g proteina", img: "images/menu-6.png" },
+      { name: "Sezonska", price: "740 din", desc: "Menja se nedeljno, prema tome šta je najbolje na pijaci tog jutra.", kcal: "~480 kcal", protein: "~20 g proteina", img: "images/menu-7.png" }
+    ];
+    const steps = [
+      { n: "01", title: "Izaberi salatu", text: "Pet stalnih recepata plus sezonska. Kažeš nam koju, i da li želiš duplu porciju proteina." },
+      { n: "02", title: "Javi vreme i adresu", text: "Telefonom ili porukom. Dostavljamo u Kruševcu; za nedeljni paket dolazimo do 11h." },
+      { n: "03", title: "Jedeš sveže", text: "Salata dolazi u staklenoj posudi, dresing odvojeno. Otvoriš, promešaš, gotovo." }
+    ];
+    const pillars = [
+      { title: "Bez šećera u dresingu", text: "Sve dresinge pravimo isto jutro, na maslinovom ulju i jogurtu." },
+      { title: "Poznati makrosi", text: "Kalorije i proteini stoje uz svaku salatu." },
+      { title: "Kupovina svako jutro", text: "Povrće se ne drži po frižiderima danima, koliko se proda, toliko se spremi." },
+      { title: "Staklene posude", text: "Posude vraćaš pri sledećoj dostavi." }
+    ];
+    const faqData = [
+      { q: "Da li dostavljate po celom Kruševcu?", a: "Dostavljamo po gradu i bližim naseljima. Pošalji adresu i potvrdimo odmah." },
+      { q: "Mogu li da menjam sastojke?", a: "Da, možeš izbaciti sastojak ili dodati proteine. Veće izmene radimo za nedeljni paket." },
+      { q: "Koliko su sveži sastojci?", a: "Sastojke nabavljamo svako jutro. Dresing je odvojen, pa lišće ostaje hrskavo do obroka." },
+      { q: "Kako se plaća?", a: "Gotovinom ili karticom pri dostavi." }
+    ];
+    menu.forEach(m => {
+      m.imgStyle = {
+        aspectRatio: "3 / 2",
+        backgroundColor: "var(--stripe)",
+        backgroundImage: 'url("' + m.img + '")',
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      };
+    });
+    const faq = faqData.map((f, i) => ({
+      q: f.q, a: f.a,
+      open: this.state.open === i,
+      sign: this.state.open === i ? "–" : "+",
+      toggle: () => this.setState(s => ({ open: s.open === i ? -1 : i }))
+    }));
+    return {
+      menu, steps, pillars, faq, showWeekly, showNutrition,
+      theme,
+      wideNav: !this.state.narrow,
+      narrowNav: this.state.narrow,
+      menuOpen: this.state.narrow && this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      showSun: theme === 'dark',
+      showMoon: theme !== 'dark',
+      themeTitle: theme === 'dark' ? 'Pređi na svetlu temu' : 'Pređi na tamnu temu',
+      toggleTheme: () => this.toggle(),
+      weeklyPrice: "3.450 din / nedelja",
+      groups: this.buildGroups(),
+      ...this.buildSummary(),
+      resetBuild: () => this.setState({ base: 0, protein: 1, extras: [0, 5], dressing: 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>
